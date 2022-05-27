@@ -81,7 +81,6 @@ public class GameController : MonoBehaviour
         }
     }
 
-    //tentativi di rallentare la funzione
     private IEnumerator BucketDFSslow(int x, int y, Color _oldC, Color _newC)
     {
         if (x < 0 || x >= instance.xDim || y < 0 || y >= instance.yDim || matrix[y, x].color != _oldC)
@@ -89,29 +88,16 @@ public class GameController : MonoBehaviour
         else
         {
             matrix[y, x].color = _newC;
-            yield return new WaitForSeconds(instance.slowTime);
-            StartCoroutine(BucketDFSslow(x - 1, y, _oldC, _newC));
-            yield return new WaitForSeconds(instance.slowTime);
-            StartCoroutine(BucketDFSslow(x + 1, y, _oldC, _newC));
-            yield return new WaitForSeconds(instance.slowTime);
-            StartCoroutine(BucketDFSslow(x, y - 1, _oldC, _newC));
-            yield return new WaitForSeconds(instance.slowTime);
-            StartCoroutine(BucketDFSslow(x, y + 1, _oldC, _newC));
-
+            yield return new WaitForSeconds(slowTime);
+            yield return StartCoroutine(BucketDFSslow(x - 1, y, _oldC, _newC));
+            yield return new WaitForSeconds(slowTime);
+            yield return StartCoroutine(BucketDFSslow(x + 1, y, _oldC, _newC));
+            yield return new WaitForSeconds(slowTime);
+            yield return StartCoroutine(BucketDFSslow(x, y - 1, _oldC, _newC));
+            yield return new WaitForSeconds(slowTime);
+            yield return StartCoroutine(BucketDFSslow(x, y + 1, _oldC, _newC));
+            yield return new WaitForSeconds(slowTime);
         }
     }
-    //private static void forceWait(float waitSeconds)
-    //{
-    //    float startTime = Time.time;
-    //    while (true)
-    //        if (Time.time == startTime + waitSeconds)
-    //            return;
-    //}
-
-    //private IEnumerator wait (float waitSeconds)
-    //{
-    //    yield return new WaitForSeconds(waitSeconds);
-
-    //}
 
 }
