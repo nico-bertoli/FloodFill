@@ -131,7 +131,6 @@ public class GameController : MonoBehaviour
     }
 
     // scanline algorithm
-    //The scanline floodfill algorithm using stack instead of recursion, more robust
     IEnumerator ScanlineAlg(int x, int y, Color _oldC, Color _newC) {
         if (_oldC == _newC) yield return 0;
 
@@ -143,7 +142,7 @@ public class GameController : MonoBehaviour
         stack.Push(x);
         stack.Push(y);
 
-        while (stack.Count>=0) {
+        while (stack.Count>0) {
 
             y = stack.Pop();
             x = stack.Pop();
@@ -171,6 +170,7 @@ public class GameController : MonoBehaviour
                 if (!spanBelow && y < yDim-1 && matrix[y + 1, x1].color == _oldC) {
                     stack.Push(x1);
                     stack.Push(y + 1);
+                    Debug.Log(y + 1 + "added");
                     spanBelow = true;
                 }
                 else if (spanBelow && y < yDim-1 && matrix[y + 1,x1].color != _oldC) {
