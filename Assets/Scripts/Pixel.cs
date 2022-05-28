@@ -27,9 +27,7 @@ public class Pixel : MonoBehaviour
         mySpriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    private void OnMouseDown()
-    {
+    private void OnMouseDown() {
         GameController.paintPixel(this);
     }
-
 }

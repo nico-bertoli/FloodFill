@@ -32,7 +32,7 @@ public class GameController : MonoBehaviour
         for (int y = 0; y < yDim; y++)
             for (int x = 0; x < xDim; x++)
             {
-                matrix[y, x] = Instantiate(pixelPrefab, new Vector2(x, y), Quaternion.identity).GetComponent<Pixel>();
+                matrix[y, x] = Instantiate(pixelPrefab, new Vector2(x, -y), Quaternion.identity).GetComponent<Pixel>();
                 matrix[y, x].xPos = x;
                 matrix[y, x].yPos = y;
             }
@@ -130,50 +130,50 @@ public class GameController : MonoBehaviour
         }
     }
 
-    // scanline algorithm
+    //scanline algorithm
     IEnumerator ScanlineAlg(int x, int y, Color _oldC, Color _newC) {
+        Debug.Log("scanline called with y = " + y);
         if (_oldC == _newC) yield return 0;
-
         int x1;
         bool spanAbove, spanBelow;
-
-        Stack<int> stack = new Stack<int> ();
-
+        Stack<int> stack = new Stack<int>();
         stack.Push(x);
         stack.Push(y);
 
-        while (stack.Count>0) {
+        while (stack.Count > 0) {
 
             y = stack.Pop();
             x = stack.Pop();
 
             x1 = x;
 
-            while (x1 >= 0 && matrix[y,x1].color == _oldC) x1--;
+            while (x1 >= 0 && matrix[y, x1].color == _oldC) x1--;
 
             x1++;
 
             spanAbove = spanBelow = false;
 
-            while (x1 < xDim && matrix[y,x1].color == _oldC) {
-                matrix[y,x1].color = _newC;
-                
+            while (x1 < xDim && matrix[y, x1].color == _oldC) {
+
+                matrix[y, x1].color = _newC;
+
                 if (!spanAbove && y > 0 && matrix[y - 1, x1].color == _oldC) {
                     stack.Push(x1);
                     stack.Push(y - 1);
+                    int outt = y - 1;
+                    Debug.Log("seed: " + x1 + ", " + outt + " added");
                     spanAbove = true;
                 }
                 else if (spanAbove && y > 0 && matrix[y - 1, x1].color != _oldC) {
-                    spanAbove = true;
+                    spanAbove = false;
                 }
                 // check h 
-                if (!spanBelow && y < yDim-1 && matrix[y + 1, x1].color == _oldC) {
+                if (!spanBelow && y < yDim - 1 && matrix[y + 1, x1].color == _oldC) {
                     stack.Push(x1);
                     stack.Push(y + 1);
-                    Debug.Log(y + 1 + "added");
                     spanBelow = true;
                 }
-                else if (spanBelow && y < yDim-1 && matrix[y + 1,x1].color != _oldC) {
+                else if (spanBelow && y < yDim - 1 && matrix[y + 1, x1].color != _oldC) {
                     spanBelow = false;
                 }
                 x1++;
