@@ -232,7 +232,7 @@ MonoBehaviour:
   pixelPrefab: {fileID: 4336707514834370697, guid: 8bf34a847ba5241e89ac2d2bd8b55fca, type: 3}
   xDim: 24
   yDim: 24
-  slowTime: 0.02
+  slowTime: 0.01
 --- !u!4 &191604788
 Transform:
   m_ObjectHideFlags: 0

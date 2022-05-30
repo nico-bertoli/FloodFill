@@ -37,7 +37,8 @@ public class GameController : MonoBehaviour
                 matrix[y, x].yPos = y;
             }
         instance = this;
-                
+
+        ActiveColor = Color.black;
     }
 
     public void ActivatePencilMode()
